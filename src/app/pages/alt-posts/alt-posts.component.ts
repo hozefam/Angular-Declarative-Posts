@@ -11,6 +11,7 @@ import { IPost } from './../../models/IPost';
 })
 export class AltPostsComponent implements OnInit {
   posts$ = this.postService.posts$;
+  selectedPost$ = this.postService.post$;
 
   onSelectPost(post: IPost, event: Event) {
     event.preventDefault();
