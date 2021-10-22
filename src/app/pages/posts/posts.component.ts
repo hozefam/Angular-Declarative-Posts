@@ -5,10 +5,10 @@ import {
   OnDestroy,
   OnInit,
 } from '@angular/core';
+import { Subscription, interval } from 'rxjs';
 
 import { IPost } from './../../models/IPost';
 import { PostService } from './../../services/post.service';
-import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-posts',

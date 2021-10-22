@@ -5,9 +5,12 @@ import { HeaderComponent } from './components/header/header.component';
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { PostsComponent } from './pages/posts/posts.component';
+import { HomeComponent } from './pages/home/home.component';
+import { DeclartivePostsComponent } from './pages/declartive-posts/declartive-posts.component';
+import { AltPostsComponent } from './pages/alt-posts/alt-posts.component';
 
 @NgModule({
-  declarations: [AppComponent, HeaderComponent, PostsComponent],
+  declarations: [AppComponent, HeaderComponent, PostsComponent, HomeComponent, DeclartivePostsComponent, AltPostsComponent],
   imports: [BrowserModule, AppRoutingModule, HttpClientModule],
   providers: [],
   bootstrap: [AppComponent],

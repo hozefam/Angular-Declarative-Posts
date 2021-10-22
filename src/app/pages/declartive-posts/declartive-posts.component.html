@@ -1,0 +1,40 @@
+<div class="row">
+  <div class="col-md-12">
+    <h3>Declarative Posts Data</h3>
+
+    <div class="row">
+      <div class="col-md-4">
+        <select class="form-select" (change)="onCategoryChange($event)">
+          <option value="">select category</option>
+          <option
+            [value]="category.id"
+            *ngFor="let category of category$ | async"
+          >
+            {{ category.title }}
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Id</th>
+          <th>Title</th>
+          <th>Description</th>
+          <th>Category</th>
+          <th>CategoryName</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let post of filteredPosts$ | async as posts">
+          <td>{{ post.id }}</td>
+          <td>{{ post.title }}</td>
+          <td>{{ post.description }}</td>
+          <td>{{ post.categoryId }}</td>
+          <td>{{ post.categoryName }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
