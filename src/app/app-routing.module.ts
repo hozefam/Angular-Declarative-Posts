@@ -1,5 +1,6 @@
 import { RouterModule, Routes } from '@angular/router';
 
+import { AltPostsComponent } from './pages/alt-posts/alt-posts.component';
 import { DeclartivePostsComponent } from './pages/declartive-posts/declartive-posts.component';
 import { HomeComponent } from './pages/home/home.component';
 import { NgModule } from '@angular/core';
@@ -14,6 +15,10 @@ const routes: Routes = [
   {
     path: 'declarativeposts',
     component: DeclartivePostsComponent,
+  },
+  {
+    path: 'altposts',
+    component: AltPostsComponent,
   },
 ];
 

@@ -1,4 +1,4 @@
-import { combineLatest, map } from 'rxjs';
+import { Subject, catchError, combineLatest, map, throwError } from 'rxjs';
 
 import { CategoryService } from './category.service';
 import { DeclarativeCategoryService } from './declarativecategory.service';
@@ -21,7 +21,8 @@ export class DeclarativePostService {
           postData.push({ ...posts[id], id });
         }
         return postData;
-      })
+      }),
+      catchError(this.handleError)
     );
 
   postsWithCategory$ = combineLatest([
@@ -37,11 +38,35 @@ export class DeclarativePostService {
           )?.title,
         } as IPost;
       });
-    })
+    }),
+    catchError(this.handleError)
   );
+
+  private selectedPostSubject = new Subject<string>();
+  selectedPostAction$ = this.selectedPostSubject.asObservable();
+
+  post$ = combineLatest([
+    this.postsWithCategory$,
+    this.selectedPostAction$,
+  ]).pipe(
+    map(([posts, selectedPostId]) => {
+      return posts.find((post) => post.id === selectedPostId);
+    }),
+    catchError(this.handleError)
+  );
+
+  selectPost(postId: string) {
+    this.selectedPostSubject.next(postId);
+  }
 
   constructor(
     private http: HttpClient,
     private categoryService: DeclarativeCategoryService
   ) {}
+
+  handleError(error: Error) {
+    return throwError(() => {
+      return 'Unknown error occurred. Please try again.';
+    });
+  }
 }
