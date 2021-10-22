@@ -1,5 +1,6 @@
-import { Observable, map } from 'rxjs';
+import { Observable, map, mergeMap } from 'rxjs';
 
+import { CategoryService } from './category.service';
 import { HttpClient } from '@angular/common/http';
 import { IPost } from './../models/IPost';
 import { Injectable } from '@angular/core';
@@ -8,7 +9,10 @@ import { Injectable } from '@angular/core';
   providedIn: 'root',
 })
 export class PostService {
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    private categoryService: CategoryService
+  ) {}
 
   public getPosts() {
     return this.http
@@ -24,5 +28,24 @@ export class PostService {
           return postData;
         })
       );
+  }
+
+  public getPostsWithCategory() {
+    return this.getPosts().pipe(
+      mergeMap((posts) => {
+        return this.categoryService.getCategories().pipe(
+          map((categories) => {
+            return posts.map((post) => {
+              return {
+                ...post,
+                categoryName: categories.find(
+                  (category) => category.id === post.categoryId
+                )?.title,
+              };
+            });
+          })
+        );
+      })
+    );
   }
 }
