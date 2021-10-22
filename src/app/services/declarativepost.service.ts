@@ -1,4 +1,12 @@
-import { Subject, catchError, combineLatest, map, throwError } from 'rxjs';
+import {
+  Subject,
+  catchError,
+  combineLatest,
+  map,
+  share,
+  shareReplay,
+  throwError,
+} from 'rxjs';
 
 import { CategoryService } from './category.service';
 import { DeclarativeCategoryService } from './declarativecategory.service';
@@ -22,7 +30,8 @@ export class DeclarativePostService {
         }
         return postData;
       }),
-      catchError(this.handleError)
+      catchError(this.handleError),
+      share()
     );
 
   postsWithCategory$ = combineLatest([
